@@ -13,8 +13,7 @@ func testConv1D() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let weightValue = MILValue.tensorFloat(shape: [1, 1, 1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: "conv",
+    let op = MILOps.conv(
         inputs: [
             "x": MILArgument(.name("x")),
             "weight": MILArgument(.value(weightValue)),
@@ -62,8 +61,7 @@ func testConv2D() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let weightValue = MILValue.tensorFloat(shape: [1, 1, 1, 1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: "conv",
+    let op = MILOps.conv(
         inputs: [
             "x": MILArgument(.name("x")),
             "weight": MILArgument(.value(weightValue)),
@@ -111,8 +109,7 @@ func testConv3D() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let weightValue = MILValue.tensorFloat(shape: [1, 1, 1, 1, 1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: "conv",
+    let op = MILOps.conv(
         inputs: [
             "x": MILArgument(.name("x")),
             "weight": MILArgument(.value(weightValue)),
@@ -160,8 +157,7 @@ func testConvTranspose1D() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let weightValue = MILValue.tensorFloat(shape: [1, 1, 1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: "conv_transpose",
+    let op = MILOps.conv_transpose(
         inputs: [
             "x": MILArgument(.name("x")),
             "weight": MILArgument(.value(weightValue)),
@@ -209,8 +205,7 @@ func testConvTranspose2D() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let weightValue = MILValue.tensorFloat(shape: [1, 1, 1, 1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: "conv_transpose",
+    let op = MILOps.conv_transpose(
         inputs: [
             "x": MILArgument(.name("x")),
             "weight": MILArgument(.value(weightValue)),
@@ -258,8 +253,7 @@ func testConvTranspose3D() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let weightValue = MILValue.tensorFloat(shape: [1, 1, 1, 1, 1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: "conv_transpose",
+    let op = MILOps.conv_transpose(
         inputs: [
             "x": MILArgument(.name("x")),
             "weight": MILArgument(.value(weightValue)),
@@ -310,8 +304,7 @@ func testConvQuantized2D() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let weightValue = MILValue.tensorUInt8(shape: [1, 1, 1, 1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: "conv_quantized",
+    let op = MILOps.conv_quantized(
         inputs: [
             "x": MILArgument(.name("x")),
             "weight": MILArgument(.value(weightValue)),

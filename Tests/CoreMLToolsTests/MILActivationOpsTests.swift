@@ -31,6 +31,41 @@ private let activationCases: [ActivationCase] = [
     ActivationCase(op: "scaled_tanh", input: [-1.0, 1.0], expected: [1.5 * tanhf(-0.5), 1.5 * tanhf(0.5)], extraInputs: ["alpha": MILValue.scalarFloat(1.5), "beta": MILValue.scalarFloat(0.5)])
 ]
 
+private func makeActivationOp(
+    op: String,
+    inputs: [String: MILArgument],
+    outputs: [CoreML_Specification_MILSpec_NamedValueType]
+) -> CoreML_Specification_MILSpec_Operation {
+    switch op {
+    case "relu":
+        return MILOps.relu(inputs: inputs, outputs: outputs)
+    case "relu6":
+        return MILOps.relu6(inputs: inputs, outputs: outputs)
+    case "leaky_relu":
+        return MILOps.leaky_relu(inputs: inputs, outputs: outputs)
+    case "elu":
+        return MILOps.elu(inputs: inputs, outputs: outputs)
+    case "sigmoid":
+        return MILOps.sigmoid(inputs: inputs, outputs: outputs)
+    case "silu":
+        return MILOps.silu(inputs: inputs, outputs: outputs)
+    case "softplus":
+        return MILOps.softplus(inputs: inputs, outputs: outputs)
+    case "softsign":
+        return MILOps.softsign(inputs: inputs, outputs: outputs)
+    case "thresholded_relu":
+        return MILOps.thresholded_relu(inputs: inputs, outputs: outputs)
+    case "clamped_relu":
+        return MILOps.clamped_relu(inputs: inputs, outputs: outputs)
+    case "sigmoid_hard":
+        return MILOps.sigmoid_hard(inputs: inputs, outputs: outputs)
+    case "scaled_tanh":
+        return MILOps.scaled_tanh(inputs: inputs, outputs: outputs)
+    default:
+        preconditionFailure("Unsupported activation op: \(op)")
+    }
+}
+
 @Test(arguments: activationCases)
 func testActivationOps(caseItem: ActivationCase) async throws {
     let shape = [2]
@@ -43,8 +78,8 @@ func testActivationOps(caseItem: ActivationCase) async throws {
         inputs[key] = MILArgument(.value(value))
     }
 
-    let op = MILBuilder.operation(
-        type: caseItem.op,
+    let op = makeActivationOp(
+        op: caseItem.op,
         inputs: inputs,
         outputs: [outputNamed]
     )

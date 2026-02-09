@@ -9,9 +9,10 @@ func testConst() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let constValue = MILValue.tensorFloat(shape: outputShape, values: [3, 4])
 
-    var constOp = CoreML_Specification_MILSpec_Operation()
-    constOp.type = "const"
-    constOp.outputs = [outputNamed]
+    var constOp = MILOps.const(
+        inputs: [:],
+        outputs: [outputNamed]
+    )
     constOp.attributes = ["val": constValue]
 
     let block = MILBuilder.block(operations: [constOp], outputs: ["y"])

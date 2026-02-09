@@ -68,6 +68,96 @@ private let binaryCases: [BinaryCase] = [
     BinaryCase(op: "sub", x: [1.0, -2.0], y: [3.0, 4.0], expected: [-2.0, -6.0])
 ]
 
+private func makeUnaryOp(
+    op: String,
+    inputs: [String: MILArgument],
+    outputs: [CoreML_Specification_MILSpec_NamedValueType]
+) -> CoreML_Specification_MILSpec_Operation {
+    switch op {
+    case "abs":
+        return MILOps.abs(inputs: inputs, outputs: outputs)
+    case "acos":
+        return MILOps.acos(inputs: inputs, outputs: outputs)
+    case "asin":
+        return MILOps.asin(inputs: inputs, outputs: outputs)
+    case "atan":
+        return MILOps.atan(inputs: inputs, outputs: outputs)
+    case "atanh":
+        return MILOps.atanh(inputs: inputs, outputs: outputs)
+    case "ceil":
+        return MILOps.ceil(inputs: inputs, outputs: outputs)
+    case "clip":
+        return MILOps.clip(inputs: inputs, outputs: outputs)
+    case "cos":
+        return MILOps.cos(inputs: inputs, outputs: outputs)
+    case "cosh":
+        return MILOps.cosh(inputs: inputs, outputs: outputs)
+    case "erf":
+        return MILOps.erf(inputs: inputs, outputs: outputs)
+    case "exp":
+        return MILOps.exp(inputs: inputs, outputs: outputs)
+    case "exp2":
+        return MILOps.exp2(inputs: inputs, outputs: outputs)
+    case "floor":
+        return MILOps.floor(inputs: inputs, outputs: outputs)
+    case "inverse":
+        return MILOps.inverse(inputs: inputs, outputs: outputs)
+    case "log":
+        return MILOps.log(inputs: inputs, outputs: outputs)
+    case "round":
+        return MILOps.round(inputs: inputs, outputs: outputs)
+    case "rsqrt":
+        return MILOps.rsqrt(inputs: inputs, outputs: outputs)
+    case "sign":
+        return MILOps.sign(inputs: inputs, outputs: outputs)
+    case "sin":
+        return MILOps.sin(inputs: inputs, outputs: outputs)
+    case "sinh":
+        return MILOps.sinh(inputs: inputs, outputs: outputs)
+    case "sqrt":
+        return MILOps.sqrt(inputs: inputs, outputs: outputs)
+    case "square":
+        return MILOps.square(inputs: inputs, outputs: outputs)
+    case "tan":
+        return MILOps.tan(inputs: inputs, outputs: outputs)
+    case "tanh":
+        return MILOps.tanh(inputs: inputs, outputs: outputs)
+    case "threshold":
+        return MILOps.threshold(inputs: inputs, outputs: outputs)
+    default:
+        preconditionFailure("Unsupported unary op: \(op)")
+    }
+}
+
+private func makeBinaryOp(
+    op: String,
+    inputs: [String: MILArgument],
+    outputs: [CoreML_Specification_MILSpec_NamedValueType]
+) -> CoreML_Specification_MILSpec_Operation {
+    switch op {
+    case "add":
+        return MILOps.add(inputs: inputs, outputs: outputs)
+    case "floor_div":
+        return MILOps.floor_div(inputs: inputs, outputs: outputs)
+    case "maximum":
+        return MILOps.maximum(inputs: inputs, outputs: outputs)
+    case "minimum":
+        return MILOps.minimum(inputs: inputs, outputs: outputs)
+    case "mod":
+        return MILOps.mod(inputs: inputs, outputs: outputs)
+    case "mul":
+        return MILOps.mul(inputs: inputs, outputs: outputs)
+    case "real_div":
+        return MILOps.real_div(inputs: inputs, outputs: outputs)
+    case "pow":
+        return MILOps.pow(inputs: inputs, outputs: outputs)
+    case "sub":
+        return MILOps.sub(inputs: inputs, outputs: outputs)
+    default:
+        preconditionFailure("Unsupported binary op: \(op)")
+    }
+}
+
 @Test(arguments: unaryCases)
 func testUnaryOps(caseItem: UnaryCase) async throws {
     let shape = [2]
@@ -79,8 +169,8 @@ func testUnaryOps(caseItem: UnaryCase) async throws {
     for (key, value) in caseItem.extraInputs {
         inputs[key] = MILArgument(.value(value))
     }
-    let op = MILBuilder.operation(
-        type: caseItem.op,
+    let op = makeUnaryOp(
+        op: caseItem.op,
         inputs: inputs,
         outputs: [outputNamed]
     )
@@ -117,8 +207,8 @@ func testBinaryOps(caseItem: BinaryCase) async throws {
     let outputNamed2 = MILBuilder.namedValue(name: "z", type: inputType)
 
     let yValue = MILValue.tensorFloat(shape: shape, values: caseItem.y)
-    let op2 = MILBuilder.operation(
-        type: caseItem.op,
+    let op2 = makeBinaryOp(
+        op: caseItem.op,
         inputs: [
             "x": MILArgument(.name("x")),
             "y": MILArgument(.value(yValue))

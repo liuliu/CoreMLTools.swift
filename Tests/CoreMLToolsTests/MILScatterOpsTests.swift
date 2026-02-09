@@ -14,8 +14,7 @@ func testScatter() async throws {
     let indicesValue = MILValue.tensorInt32(shape: [1], values: [1])
     let updatesValue = MILValue.tensorFloat(shape: [1], values: [9])
 
-    let op = MILBuilder.operation(
-        type: "scatter",
+    let op = MILOps.scatter(
         inputs: [
             "data": MILArgument(.name("data")),
             "indices": MILArgument(.value(indicesValue)),
@@ -63,8 +62,7 @@ func testScatterAlongAxis() async throws {
     let indicesValue = MILValue.tensorInt32(shape: [2, 2], values: [0, 1, 1, 0])
     let updatesValue = MILValue.tensorFloat(shape: [2, 2], values: [9, 8, 7, 6])
 
-    let op = MILBuilder.operation(
-        type: "scatter_along_axis",
+    let op = MILOps.scatter_along_axis(
         inputs: [
             "data": MILArgument(.name("data")),
             "indices": MILArgument(.value(indicesValue)),
@@ -112,8 +110,7 @@ func testScatterNd() async throws {
     let indicesValue = MILValue.tensorInt32(shape: [2, 1], values: [0, 2])
     let updatesValue = MILValue.tensorFloat(shape: [2], values: [9, 8])
 
-    let op = MILBuilder.operation(
-        type: "scatter_nd",
+    let op = MILOps.scatter_nd(
         inputs: [
             "data": MILArgument(.name("data")),
             "indices": MILArgument(.value(indicesValue)),

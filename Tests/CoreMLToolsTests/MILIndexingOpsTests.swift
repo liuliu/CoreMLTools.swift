@@ -12,8 +12,7 @@ func testArgsort() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "argsort",
+    let op = MILOps.argsort(
         inputs: [
             "x": MILArgument(.name("x")),
             "axis": MILArgument(.value(MILValue.scalarInt32(0))),
@@ -53,8 +52,7 @@ func testCumsum() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "cumsum",
+    let op = MILOps.cumsum(
         inputs: [
             "x": MILArgument(.name("x")),
             "axis": MILArgument(.value(MILValue.scalarInt32(0))),
@@ -99,8 +97,7 @@ func testGather() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let indicesValue = MILValue.tensorInt32(shape: [2], values: [2, 0])
 
-    let op = MILBuilder.operation(
-        type: "gather",
+    let op = MILOps.gather(
         inputs: [
             "x": MILArgument(.name("x")),
             "indices": MILArgument(.value(indicesValue)),
@@ -145,8 +142,7 @@ func testGatherAlongAxis() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let indicesValue = MILValue.tensorInt32(shape: [2, 2], values: [1, 0, 0, 1])
 
-    let op = MILBuilder.operation(
-        type: "gather_along_axis",
+    let op = MILOps.gather_along_axis(
         inputs: [
             "x": MILArgument(.name("x")),
             "indices": MILArgument(.value(indicesValue)),
@@ -191,8 +187,7 @@ func testGatherNd() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let indicesValue = MILValue.tensorInt32(shape: [2, 1], values: [0, 2])
 
-    let op = MILBuilder.operation(
-        type: "gather_nd",
+    let op = MILOps.gather_nd(
         inputs: [
             "x": MILArgument(.name("x")),
             "indices": MILArgument(.value(indicesValue)),
@@ -238,8 +233,7 @@ func testSliceByIndex() async throws {
     let endValue = MILValue.tensorInt32(shape: [1], values: [3])
     let strideValue = MILValue.tensorInt32(shape: [1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: "slice_by_index",
+    let op = MILOps.slice_by_index(
         inputs: [
             "x": MILArgument(.name("x")),
             "begin": MILArgument(.value(beginValue)),
@@ -285,8 +279,7 @@ func testSliceBySize() async throws {
     let beginValue = MILValue.tensorInt32(shape: [1], values: [1])
     let sizeValue = MILValue.tensorInt32(shape: [1], values: [2])
 
-    let op = MILBuilder.operation(
-        type: "slice_by_size",
+    let op = MILOps.slice_by_size(
         inputs: [
             "x": MILArgument(.name("x")),
             "begin": MILArgument(.value(beginValue)),
@@ -330,8 +323,7 @@ func testReverse() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let axesValue = MILValue.tensorInt32(shape: [1], values: [0])
 
-    let op = MILBuilder.operation(
-        type: "reverse",
+    let op = MILOps.reverse(
         inputs: [
             "x": MILArgument(.name("x")),
             "axes": MILArgument(.value(axesValue))
@@ -373,8 +365,7 @@ func testShape() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "shape",
+    let op = MILOps.shape(
         inputs: [
             "x": MILArgument(.name("x"))
         ],
@@ -413,8 +404,7 @@ func testOneHot() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let depthValue = MILValue.scalarInt32(3)
 
-    let op = MILBuilder.operation(
-        type: "one_hot",
+    let op = MILOps.one_hot(
         inputs: [
             "indices": MILArgument(.name("indices")),
             "one_hot_vector_size": MILArgument(.value(depthValue)),
@@ -461,8 +451,7 @@ func testTopk() async throws {
     let outputValues = MILBuilder.namedValue(name: "values", type: outputType)
     let outputIndices = MILBuilder.namedValue(name: "indices", type: indexType)
 
-    let op = MILBuilder.operation(
-        type: "topk",
+    let op = MILOps.topk(
         inputs: [
             "x": MILArgument(.name("x")),
             "k": MILArgument(.value(MILValue.scalarInt32(2))),

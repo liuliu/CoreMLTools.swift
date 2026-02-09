@@ -12,8 +12,7 @@ func testRandomUniform() async throws {
     let inputNamed = MILBuilder.namedValue(name: "shape", type: shapeType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "random_uniform",
+    let op = MILOps.random_uniform(
         inputs: [
             "shape": MILArgument(.name("shape")),
             "low": MILArgument(.value(MILValue.scalarFloat(0.0))),
@@ -55,8 +54,7 @@ func testRandomNormal() async throws {
     let inputNamed = MILBuilder.namedValue(name: "shape", type: shapeType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "random_normal",
+    let op = MILOps.random_normal(
         inputs: [
             "shape": MILArgument(.name("shape")),
             "mean": MILArgument(.value(MILValue.scalarFloat(0.0))),
@@ -98,8 +96,7 @@ func testRandomBernoulli() async throws {
     let inputNamed = MILBuilder.namedValue(name: "shape", type: shapeType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "random_bernoulli",
+    let op = MILOps.random_bernoulli(
         inputs: [
             "shape": MILArgument(.name("shape")),
             "prob": MILArgument(.value(MILValue.scalarFloat(0.5))),
@@ -140,8 +137,7 @@ func testRandomCategorical() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "random_categorical",
+    let op = MILOps.random_categorical(
         inputs: [
             "x": MILArgument(.name("x")),
             "mode": MILArgument(.value(MILValue.scalarString("logits"))),

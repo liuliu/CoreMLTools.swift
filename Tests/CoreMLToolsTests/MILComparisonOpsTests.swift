@@ -18,6 +18,29 @@ private let comparisonCases: [ComparisonCase] = [
     ComparisonCase(op: "less_equal", x: [1.0, 2.0], y: [1.0, 3.0], expected: [1, 1])
 ]
 
+private func makeComparisonOp(
+    op: String,
+    inputs: [String: MILArgument],
+    outputs: [CoreML_Specification_MILSpec_NamedValueType]
+) -> CoreML_Specification_MILSpec_Operation {
+    switch op {
+    case "equal":
+        return MILOps.equal(inputs: inputs, outputs: outputs)
+    case "not_equal":
+        return MILOps.not_equal(inputs: inputs, outputs: outputs)
+    case "greater":
+        return MILOps.greater(inputs: inputs, outputs: outputs)
+    case "greater_equal":
+        return MILOps.greater_equal(inputs: inputs, outputs: outputs)
+    case "less":
+        return MILOps.less(inputs: inputs, outputs: outputs)
+    case "less_equal":
+        return MILOps.less_equal(inputs: inputs, outputs: outputs)
+    default:
+        preconditionFailure("Unsupported comparison op: \(op)")
+    }
+}
+
 @Test(arguments: comparisonCases)
 func testComparisonOps(caseItem: ComparisonCase) async throws {
     let shape = [2]
@@ -29,8 +52,8 @@ func testComparisonOps(caseItem: ComparisonCase) async throws {
     let inputNamedY = MILBuilder.namedValue(name: "y", type: inputType)
 
     let compareOutput = MILBuilder.namedValue(name: "c", type: boolType)
-    let compareOp = MILBuilder.operation(
-        type: caseItem.op,
+    let compareOp = makeComparisonOp(
+        op: caseItem.op,
         inputs: [
             "x": MILArgument(.name("x")),
             "y": MILArgument(.name("y"))
@@ -39,8 +62,7 @@ func testComparisonOps(caseItem: ComparisonCase) async throws {
     )
 
     let castOutput = MILBuilder.namedValue(name: "z", type: intType)
-    let castOp = MILBuilder.operation(
-        type: "cast",
+    let castOp = MILOps.cast(
         inputs: [
             "x": MILArgument(.name("c")),
             "dtype": MILArgument(.value(MILValue.scalarString("int32")))

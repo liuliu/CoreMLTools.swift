@@ -13,8 +13,7 @@ func testReshape() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
     let shapeValue = MILValue.tensorInt32(shape: [2], values: [1, 2])
-    let op = MILBuilder.operation(
-        type: "reshape",
+    let op = MILOps.reshape(
         inputs: [
             "x": MILArgument(.name("x")),
             "shape": MILArgument(.value(shapeValue))
@@ -56,8 +55,7 @@ func testSqueeze() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
     let axesValue = MILValue.tensorInt32(shape: [1], values: [0])
-    let op = MILBuilder.operation(
-        type: "squeeze",
+    let op = MILOps.squeeze(
         inputs: [
             "x": MILArgument(.name("x")),
             "axes": MILArgument(.value(axesValue))
@@ -99,8 +97,7 @@ func testExpandDims() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
     let axesValue = MILValue.tensorInt32(shape: [1], values: [0])
-    let op = MILBuilder.operation(
-        type: "expand_dims",
+    let op = MILOps.expand_dims(
         inputs: [
             "x": MILArgument(.name("x")),
             "axes": MILArgument(.value(axesValue))
@@ -142,8 +139,7 @@ func testTranspose() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
     let permValue = MILValue.tensorInt32(shape: [2], values: [1, 0])
-    let op = MILBuilder.operation(
-        type: "transpose",
+    let op = MILOps.transpose(
         inputs: [
             "x": MILArgument(.name("x")),
             "perm": MILArgument(.value(permValue))
@@ -194,8 +190,7 @@ func testConcat() async throws {
     ])
     let axisValue = MILValue.scalarInt32(0)
 
-    let op = MILBuilder.operation(
-        type: "concat",
+    let op = MILOps.concat(
         inputs: [
             "values": valuesArg,
             "axis": MILArgument(.value(axisValue)),
@@ -247,8 +242,7 @@ func testStack() async throws {
     ])
     let axisValue = MILValue.scalarInt32(0)
 
-    let op = MILBuilder.operation(
-        type: "stack",
+    let op = MILOps.stack(
         inputs: [
             "values": valuesArg,
             "axis": MILArgument(.value(axisValue))
@@ -293,8 +287,7 @@ func testTile() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
     let repsValue = MILValue.tensorInt32(shape: [1], values: [2])
-    let op = MILBuilder.operation(
-        type: "tile",
+    let op = MILOps.tile(
         inputs: [
             "x": MILArgument(.name("x")),
             "reps": MILArgument(.value(repsValue))
@@ -337,8 +330,7 @@ func testPad() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
     let padValue = MILValue.tensorInt32(shape: [2], values: [1, 1])
-    let op = MILBuilder.operation(
-        type: "pad",
+    let op = MILOps.pad(
         inputs: [
             "x": MILArgument(.name("x")),
             "pad": MILArgument(.value(padValue)),
@@ -382,8 +374,7 @@ func testSlidingWindows() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "sliding_windows",
+    let op = MILOps.sliding_windows(
         inputs: [
             "x": MILArgument(.name("x")),
             "axis": MILArgument(.value(MILValue.scalarInt32(1))),
@@ -429,8 +420,7 @@ func testReverseSequence() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
     let lengths = MILValue.tensorInt32(shape: [4], values: [7, 2, 3, 5])
-    let op = MILBuilder.operation(
-        type: "reverse_sequence",
+    let op = MILOps.reverse_sequence(
         inputs: [
             "x": MILArgument(.name("x")),
             "lengths": MILArgument(.value(lengths)),

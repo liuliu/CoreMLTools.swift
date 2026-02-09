@@ -12,8 +12,7 @@ func testDepthToSpace() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "depth_to_space",
+    let op = MILOps.depth_to_space(
         inputs: [
             "x": MILArgument(.name("x")),
             "block_size": MILArgument(.value(MILValue.scalarInt32(2)))
@@ -56,8 +55,7 @@ func testSpaceToDepth() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "space_to_depth",
+    let op = MILOps.space_to_depth(
         inputs: [
             "x": MILArgument(.name("x")),
             "block_size": MILArgument(.value(MILValue.scalarInt32(2)))
@@ -100,8 +98,7 @@ func testPixelShuffle() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "pixel_shuffle",
+    let op = MILOps.pixel_shuffle(
         inputs: [
             "x": MILArgument(.name("x")),
             "upscale_factor": MILArgument(.value(MILValue.scalarInt32(2)))
@@ -146,8 +143,7 @@ func testSpaceToBatch() async throws {
 
     let blockShape = MILValue.tensorInt32(shape: [2], values: [2, 2])
     let paddings = MILValue.tensorInt32(shape: [2, 2], values: [0, 0, 2, 0])
-    let op = MILBuilder.operation(
-        type: "space_to_batch",
+    let op = MILOps.space_to_batch(
         inputs: [
             "x": MILArgument(.name("x")),
             "block_shape": MILArgument(.value(blockShape)),
@@ -208,8 +204,7 @@ func testBatchToSpace() async throws {
 
     let blockShape = MILValue.tensorInt32(shape: [2], values: [2, 2])
     let crops = MILValue.tensorInt32(shape: [2, 2], values: [0, 0, 2, 0])
-    let op = MILBuilder.operation(
-        type: "batch_to_space",
+    let op = MILOps.batch_to_space(
         inputs: [
             "x": MILArgument(.name("x")),
             "block_shape": MILArgument(.value(blockShape)),
@@ -268,8 +263,7 @@ func testResizeNearestNeighbor() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "resize_nearest_neighbor",
+    let op = MILOps.resize_nearest_neighbor(
         inputs: [
             "x": MILArgument(.name("x")),
             "target_size_height": MILArgument(.value(MILValue.scalarInt32(2))),
@@ -313,8 +307,7 @@ func testResizeBilinear() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "resize_bilinear",
+    let op = MILOps.resize_bilinear(
         inputs: [
             "x": MILArgument(.name("x")),
             "target_size_height": MILArgument(.value(MILValue.scalarInt32(1))),
@@ -359,8 +352,7 @@ func testUpsampleNearestNeighbor() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "upsample_nearest_neighbor",
+    let op = MILOps.upsample_nearest_neighbor(
         inputs: [
             "x": MILArgument(.name("x")),
             "scale_factor_height": MILArgument(.value(MILValue.scalarInt32(1))),
@@ -404,8 +396,7 @@ func testUpsampleBilinear() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "upsample_bilinear",
+    let op = MILOps.upsample_bilinear(
         inputs: [
             "x": MILArgument(.name("x")),
             "scale_factor_height": MILArgument(.value(MILValue.scalarInt32(1))),
@@ -452,8 +443,7 @@ func testCrop() async throws {
 
     let cropHeight = MILValue.tensorInt32(shape: [2], values: [0, 1])
     let cropWidth = MILValue.tensorInt32(shape: [2], values: [1, 1])
-    let op = MILBuilder.operation(
-        type: "crop",
+    let op = MILOps.crop(
         inputs: [
             "x": MILArgument(.name("x")),
             "crop_height": MILArgument(.value(cropHeight)),
@@ -508,8 +498,7 @@ func testCropResize() async throws {
     let roiNamed = MILBuilder.namedValue(name: "boxes", type: roiType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "crop_resize",
+    let op = MILOps.crop_resize(
         inputs: [
             "x": MILArgument(.name("x")),
             "boxes": MILArgument(.name("boxes")),

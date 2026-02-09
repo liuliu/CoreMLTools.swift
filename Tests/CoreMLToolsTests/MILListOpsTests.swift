@@ -13,8 +13,7 @@ func testMakeListWriteRead() async throws {
     let listNamed2 = MILBuilder.namedValue(name: "ls2", type: listType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: elemType)
 
-    let makeList = MILBuilder.operation(
-        type: "make_list",
+    let makeList = MILOps.make_list(
         inputs: [
             "init_length": MILArgument(.value(MILValue.scalarInt32(1))),
             "dynamic_length": MILArgument(.value(MILValue.scalarBool(false))),
@@ -24,8 +23,7 @@ func testMakeListWriteRead() async throws {
         outputs: [listNamed]
     )
 
-    let listWrite = MILBuilder.operation(
-        type: "list_write",
+    let listWrite = MILOps.list_write(
         inputs: [
             "ls": MILArgument(.name("ls")),
             "index": MILArgument(.value(MILValue.scalarInt32(0))),
@@ -34,8 +32,7 @@ func testMakeListWriteRead() async throws {
         outputs: [listNamed2]
     )
 
-    let listRead = MILBuilder.operation(
-        type: "list_read",
+    let listRead = MILOps.list_read(
         inputs: [
             "ls": MILArgument(.name("ls2")),
             "index": MILArgument(.value(MILValue.scalarInt32(0)))
@@ -82,8 +79,7 @@ func testListGather() async throws {
     let listNamed3 = MILBuilder.namedValue(name: "ls3", type: listType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let makeList = MILBuilder.operation(
-        type: "make_list",
+    let makeList = MILOps.make_list(
         inputs: [
             "init_length": MILArgument(.value(MILValue.scalarInt32(2))),
             "dynamic_length": MILArgument(.value(MILValue.scalarBool(false))),
@@ -93,8 +89,7 @@ func testListGather() async throws {
         outputs: [listNamed]
     )
 
-    let listWrite0 = MILBuilder.operation(
-        type: "list_write",
+    let listWrite0 = MILOps.list_write(
         inputs: [
             "ls": MILArgument(.name("ls")),
             "index": MILArgument(.value(MILValue.scalarInt32(0))),
@@ -103,8 +98,7 @@ func testListGather() async throws {
         outputs: [listNamed2]
     )
 
-    let listWrite1 = MILBuilder.operation(
-        type: "list_write",
+    let listWrite1 = MILOps.list_write(
         inputs: [
             "ls": MILArgument(.name("ls2")),
             "index": MILArgument(.value(MILValue.scalarInt32(1))),
@@ -114,8 +108,7 @@ func testListGather() async throws {
     )
 
     let indicesValue = MILValue.tensorInt32(shape: [2], values: [0, 1])
-    let listGather = MILBuilder.operation(
-        type: "list_gather",
+    let listGather = MILOps.list_gather(
         inputs: [
             "ls": MILArgument(.name("ls3")),
             "indices": MILArgument(.value(indicesValue))
@@ -164,8 +157,7 @@ func testListScatter() async throws {
     let listNamed2 = MILBuilder.namedValue(name: "ls2", type: listType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let makeList = MILBuilder.operation(
-        type: "make_list",
+    let makeList = MILOps.make_list(
         inputs: [
             "init_length": MILArgument(.value(MILValue.scalarInt32(2))),
             "dynamic_length": MILArgument(.value(MILValue.scalarBool(false))),
@@ -176,8 +168,7 @@ func testListScatter() async throws {
     )
 
     let indicesValue = MILValue.tensorInt32(shape: [2], values: [0, 1])
-    let listScatter = MILBuilder.operation(
-        type: "list_scatter",
+    let listScatter = MILOps.list_scatter(
         inputs: [
             "ls": MILArgument(.name("ls")),
             "indices": MILArgument(.value(indicesValue)),
@@ -186,8 +177,7 @@ func testListScatter() async throws {
         outputs: [listNamed2]
     )
 
-    let listGather = MILBuilder.operation(
-        type: "list_gather",
+    let listGather = MILOps.list_gather(
         inputs: [
             "ls": MILArgument(.name("ls2")),
             "indices": MILArgument(.value(indicesValue))
@@ -226,8 +216,7 @@ func testListLength() async throws {
     let listType = MILType.list(elementType: MILType.tensor(dataType: .float32, shape: [1]), length: 3)
     let listNamed = MILBuilder.namedValue(name: "ls", type: listType)
 
-    let makeList = MILBuilder.operation(
-        type: "make_list",
+    let makeList = MILOps.make_list(
         inputs: [
             "init_length": MILArgument(.value(MILValue.scalarInt32(3))),
             "dynamic_length": MILArgument(.value(MILValue.scalarBool(false))),
@@ -237,8 +226,7 @@ func testListLength() async throws {
         outputs: [listNamed]
     )
 
-    let listLength = MILBuilder.operation(
-        type: "list_length",
+    let listLength = MILOps.list_length(
         inputs: [
             "ls": MILArgument(.name("ls"))
         ],

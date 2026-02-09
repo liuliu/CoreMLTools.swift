@@ -16,8 +16,7 @@ func testEinsumChwWhr() async throws {
     let inputNamedY = MILBuilder.namedValue(name: "y", type: yType)
     let outputNamed = MILBuilder.namedValue(name: "z", type: outputType)
 
-    let einsumOp = MILBuilder.operation(
-        type: "einsum",
+    let einsumOp = MILOps.einsum(
         inputs: [
             "values": MILArgument([.name("x"), .name("y")]),
             "equation": MILArgument(.value(MILValue.scalarString("chw,whr->chr")))

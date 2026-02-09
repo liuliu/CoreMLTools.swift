@@ -7,9 +7,10 @@ private func makeConstOp(
     value: CoreML_Specification_MILSpec_Value,
     outputType: CoreML_Specification_MILSpec_ValueType
 ) -> CoreML_Specification_MILSpec_Operation {
-    var op = CoreML_Specification_MILSpec_Operation()
-    op.type = "const"
-    op.outputs = [MILBuilder.namedValue(name: name, type: outputType)]
+    var op = MILOps.const(
+        inputs: [:],
+        outputs: [MILBuilder.namedValue(name: name, type: outputType)]
+    )
     op.attributes = ["val": value]
     return op
 }
@@ -47,8 +48,7 @@ func testCond() async throws {
         inputs: []
     )
 
-    var condOp = MILBuilder.operation(
-        type: "cond",
+    var condOp = MILOps.cond(
         inputs: [
             "pred": MILArgument(.name("p"))
         ],
@@ -88,8 +88,7 @@ func testWhileLoop() async throws {
     let condInput = MILBuilder.namedValue(name: "x", type: floatType)
     let bodyInput = MILBuilder.namedValue(name: "x", type: floatType)
 
-    let condOpInner = MILBuilder.operation(
-        type: "less",
+    let condOpInner = MILOps.less(
         inputs: [
             "x": MILArgument(.name("x")),
             "y": MILArgument(.value(MILValue.scalarFloat(3.0)))
@@ -102,8 +101,7 @@ func testWhileLoop() async throws {
         inputs: [condInput]
     )
 
-    let addOpInner = MILBuilder.operation(
-        type: "add",
+    let addOpInner = MILOps.add(
         inputs: [
             "x": MILArgument(.name("x")),
             "y": MILArgument(.value(MILValue.scalarFloat(1.0)))
@@ -116,8 +114,7 @@ func testWhileLoop() async throws {
         inputs: [bodyInput]
     )
 
-    var whileOp = MILBuilder.operation(
-        type: "while_loop",
+    var whileOp = MILOps.while_loop(
         inputs: [
             "loop_vars": MILArgument([.name("x0")])
         ],

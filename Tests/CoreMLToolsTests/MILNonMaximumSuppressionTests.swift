@@ -21,8 +21,7 @@ func testNonMaximumSuppression() async throws {
     let outScoresNamed = MILBuilder.namedValue(name: "out_scores", type: MILType.tensor(dataType: .float32, shape: outScoresShape))
     let outIndicesNamed = MILBuilder.namedValue(name: "out_indices", type: MILType.tensor(dataType: .int32, shape: outIndicesShape))
 
-    let op = MILBuilder.operation(
-        type: "non_maximum_suppression",
+    let op = MILOps.non_maximum_suppression(
         inputs: [
             "boxes": MILArgument(.name("boxes")),
             "scores": MILArgument(.name("scores")),

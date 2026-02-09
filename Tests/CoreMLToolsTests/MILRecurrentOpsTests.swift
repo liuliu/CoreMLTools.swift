@@ -27,8 +27,7 @@ func testRnnZeroWeights() async throws {
     let outputY = MILBuilder.namedValue(name: "y", type: yType)
     let outputH = MILBuilder.namedValue(name: "h", type: hType)
 
-    let op = MILBuilder.operation(
-        type: "rnn",
+    let op = MILOps.rnn(
         inputs: [
             "x": MILArgument(.name("x")),
             "initial_h": MILArgument(.name("initial_h")),
@@ -90,8 +89,7 @@ func testGruZeroWeights() async throws {
     let outputY = MILBuilder.namedValue(name: "y", type: yType)
     let outputH = MILBuilder.namedValue(name: "h", type: hType)
 
-    let op = MILBuilder.operation(
-        type: "gru",
+    let op = MILOps.gru(
         inputs: [
             "x": MILArgument(.name("x")),
             "initial_h": MILArgument(.name("initial_h")),
@@ -156,8 +154,7 @@ func testLstmZeroWeights() async throws {
     let outputH = MILBuilder.namedValue(name: "h", type: hType)
     let outputC = MILBuilder.namedValue(name: "c", type: hType)
 
-    let op = MILBuilder.operation(
-        type: "lstm",
+    let op = MILOps.lstm(
         inputs: [
             "x": MILArgument(.name("x")),
             "initial_h": MILArgument(.name("initial_h")),

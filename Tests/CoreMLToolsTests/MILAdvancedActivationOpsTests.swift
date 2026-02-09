@@ -14,8 +14,7 @@ func testSoftplusParametric() async throws {
     let alphaValue = MILValue.tensorFloat(shape: [2], values: [1.0, 2.0])
     let betaValue = MILValue.tensorFloat(shape: [2], values: [1.0, 0.5])
 
-    let op = MILBuilder.operation(
-        type: "softplus_parametric",
+    let op = MILOps.softplus_parametric(
         inputs: [
             "x": MILArgument(.name("x")),
             "alpha": MILArgument(.value(alphaValue)),

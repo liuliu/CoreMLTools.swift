@@ -12,8 +12,7 @@ func testAvgPool() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "avg_pool",
+    let op = MILOps.avg_pool(
         inputs: [
             "x": MILArgument(.name("x")),
             "kernel_sizes": MILArgument(.value(MILValue.tensorInt32(shape: [2], values: [2, 2]))),
@@ -58,8 +57,7 @@ func testMaxPool() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "max_pool",
+    let op = MILOps.max_pool(
         inputs: [
             "x": MILArgument(.name("x")),
             "kernel_sizes": MILArgument(.value(MILValue.tensorInt32(shape: [2], values: [2, 2]))),
@@ -103,8 +101,7 @@ func testL2Pool() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "l2_pool",
+    let op = MILOps.l2_pool(
         inputs: [
             "x": MILArgument(.name("x")),
             "kernel_sizes": MILArgument(.value(MILValue.tensorInt32(shape: [2], values: [2, 2]))),
@@ -148,8 +145,7 @@ func testBatchNorm() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "batch_norm",
+    let op = MILOps.batch_norm(
         inputs: [
             "x": MILArgument(.name("x")),
             "mean": MILArgument(.value(MILValue.tensorFloat(shape: [1], values: [1.0]))),
@@ -195,8 +191,7 @@ func testInstanceNorm() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "instance_norm",
+    let op = MILOps.instance_norm(
         inputs: [
             "x": MILArgument(.name("x")),
             "gamma": MILArgument(.value(MILValue.tensorFloat(shape: [1], values: [1.0]))),
@@ -240,8 +235,7 @@ func testLayerNorm() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "layer_norm",
+    let op = MILOps.layer_norm(
         inputs: [
             "x": MILArgument(.name("x")),
             "axes": MILArgument(.value(MILValue.tensorInt32(shape: [1], values: [1]))),
@@ -286,8 +280,7 @@ func testL2Norm() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "l2_norm",
+    let op = MILOps.l2_norm(
         inputs: [
             "x": MILArgument(.name("x")),
             "epsilon": MILArgument(.value(MILValue.scalarFloat(0.0)))
@@ -327,8 +320,7 @@ func testLocalResponseNorm() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "local_response_norm",
+    let op = MILOps.local_response_norm(
         inputs: [
             "x": MILArgument(.name("x")),
             "size": MILArgument(.value(MILValue.scalarInt32(1))),
@@ -375,8 +367,7 @@ func testLinear() async throws {
     let weightValue = MILValue.tensorFloat(shape: [3, 2], values: [1, 0, 0, 1, 1, 1])
     let biasValue = MILValue.tensorFloat(shape: [3], values: [0, 0, 0])
 
-    let op = MILBuilder.operation(
-        type: "linear",
+    let op = MILOps.linear(
         inputs: [
             "x": MILArgument(.name("x")),
             "weight": MILArgument(.value(weightValue)),

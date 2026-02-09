@@ -25,6 +25,25 @@ private let logicalBinaryCases: [LogicalBinaryCase] = [
     LogicalBinaryCase(op: "logical_xor", x: [0.0, 1.0], y: [1.0, 1.0], expected: [1, 0])
 ]
 
+private func makeLogicalOp(
+    op: String,
+    inputs: [String: MILArgument],
+    outputs: [CoreML_Specification_MILSpec_NamedValueType]
+) -> CoreML_Specification_MILSpec_Operation {
+    switch op {
+    case "logical_not":
+        return MILOps.logical_not(inputs: inputs, outputs: outputs)
+    case "logical_and":
+        return MILOps.logical_and(inputs: inputs, outputs: outputs)
+    case "logical_or":
+        return MILOps.logical_or(inputs: inputs, outputs: outputs)
+    case "logical_xor":
+        return MILOps.logical_xor(inputs: inputs, outputs: outputs)
+    default:
+        preconditionFailure("Unsupported logical op: \(op)")
+    }
+}
+
 @Test(arguments: logicalUnaryCases)
 func testLogicalUnaryOps(caseItem: LogicalUnaryCase) async throws {
     let shape = [2]
@@ -34,8 +53,7 @@ func testLogicalUnaryOps(caseItem: LogicalUnaryCase) async throws {
 
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
 
-    let castToBool = MILBuilder.operation(
-        type: "cast",
+    let castToBool = MILOps.cast(
         inputs: [
             "x": MILArgument(.name("x")),
             "dtype": MILArgument(.value(MILValue.scalarString("bool")))
@@ -43,14 +61,13 @@ func testLogicalUnaryOps(caseItem: LogicalUnaryCase) async throws {
         outputs: [MILBuilder.namedValue(name: "bx", type: boolType)]
     )
 
-    let logicalOp = MILBuilder.operation(
-        type: caseItem.op,
+    let logicalOp = makeLogicalOp(
+        op: caseItem.op,
         inputs: ["x": MILArgument(.name("bx"))],
         outputs: [MILBuilder.namedValue(name: "lb", type: boolType)]
     )
 
-    let castToInt = MILBuilder.operation(
-        type: "cast",
+    let castToInt = MILOps.cast(
         inputs: [
             "x": MILArgument(.name("lb")),
             "dtype": MILArgument(.value(MILValue.scalarString("int32")))
@@ -91,8 +108,7 @@ func testLogicalBinaryOps(caseItem: LogicalBinaryCase) async throws {
     let inputNamedX = MILBuilder.namedValue(name: "x", type: inputType)
     let inputNamedY = MILBuilder.namedValue(name: "y", type: inputType)
 
-    let castX = MILBuilder.operation(
-        type: "cast",
+    let castX = MILOps.cast(
         inputs: [
             "x": MILArgument(.name("x")),
             "dtype": MILArgument(.value(MILValue.scalarString("bool")))
@@ -100,8 +116,7 @@ func testLogicalBinaryOps(caseItem: LogicalBinaryCase) async throws {
         outputs: [MILBuilder.namedValue(name: "bx", type: boolType)]
     )
 
-    let castY = MILBuilder.operation(
-        type: "cast",
+    let castY = MILOps.cast(
         inputs: [
             "x": MILArgument(.name("y")),
             "dtype": MILArgument(.value(MILValue.scalarString("bool")))
@@ -109,8 +124,8 @@ func testLogicalBinaryOps(caseItem: LogicalBinaryCase) async throws {
         outputs: [MILBuilder.namedValue(name: "by", type: boolType)]
     )
 
-    let logicalOp = MILBuilder.operation(
-        type: caseItem.op,
+    let logicalOp = makeLogicalOp(
+        op: caseItem.op,
         inputs: [
             "x": MILArgument(.name("bx")),
             "y": MILArgument(.name("by"))
@@ -118,8 +133,7 @@ func testLogicalBinaryOps(caseItem: LogicalBinaryCase) async throws {
         outputs: [MILBuilder.namedValue(name: "lb", type: boolType)]
     )
 
-    let castToInt = MILBuilder.operation(
-        type: "cast",
+    let castToInt = MILOps.cast(
         inputs: [
             "x": MILArgument(.name("lb")),
             "dtype": MILArgument(.value(MILValue.scalarString("int32")))

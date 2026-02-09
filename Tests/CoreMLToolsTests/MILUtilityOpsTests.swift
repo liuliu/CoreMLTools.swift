@@ -12,8 +12,7 @@ func testFlatten2d() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "flatten2d",
+    let op = MILOps.flatten2d(
         inputs: [
             "x": MILArgument(.name("x")),
             "axis": MILArgument(.value(MILValue.scalarInt32(1)))
@@ -55,8 +54,7 @@ func testBandPart() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "band_part",
+    let op = MILOps.band_part(
         inputs: [
             "x": MILArgument(.name("x")),
             "lower": MILArgument(.value(MILValue.scalarInt32(0))),
@@ -99,8 +97,7 @@ func testRange1D() async throws {
     let inputNamed = MILBuilder.namedValue(name: "dummy", type: dummyType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "range_1d",
+    let op = MILOps.range_1d(
         inputs: [
             "start": MILArgument(.value(MILValue.scalarInt32(0))),
             "end": MILArgument(.value(MILValue.scalarInt32(3))),
@@ -141,8 +138,7 @@ func testFill() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let shapeValue = MILValue.tensorInt32(shape: [1], values: [2])
 
-    let op = MILBuilder.operation(
-        type: "fill",
+    let op = MILOps.fill(
         inputs: [
             "shape": MILArgument(.value(shapeValue)),
             "value": MILArgument(.value(MILValue.scalarFloat(3.0)))
@@ -186,8 +182,7 @@ func testSelect() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let condValue = MILValue.tensorBool(shape: [2], values: [true, false])
 
-    let op = MILBuilder.operation(
-        type: "select",
+    let op = MILOps.select(
         inputs: [
             "cond": MILArgument(.value(condValue)),
             "a": MILArgument(.name("a")),
@@ -233,8 +228,7 @@ func testSplit() async throws {
     let output0 = MILBuilder.namedValue(name: "y0", type: outputType)
     let output1 = MILBuilder.namedValue(name: "y1", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "split",
+    let op = MILOps.split(
         inputs: [
             "x": MILArgument(.name("x")),
             "num_splits": MILArgument(.value(MILValue.scalarInt32(2))),
@@ -281,8 +275,7 @@ func testNonZero() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "non_zero",
+    let op = MILOps.non_zero(
         inputs: [
             "x": MILArgument(.name("x"))
         ],

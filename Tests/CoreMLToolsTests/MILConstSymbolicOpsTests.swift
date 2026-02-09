@@ -13,9 +13,10 @@ func testConstSymbolic() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let constValue = MILValue.tensorFloat(shape: outputShape, values: [3, 4])
 
-    var constOp = CoreML_Specification_MILSpec_Operation()
-    constOp.type = "_const_symbolic"
-    constOp.outputs = [outputNamed]
+    var constOp = MILOps._const_symbolic(
+        inputs: [:],
+        outputs: [outputNamed]
+    )
     constOp.attributes = ["val": constValue]
 
     let block = MILBuilder.block(operations: [constOp], outputs: ["y"])

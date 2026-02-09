@@ -34,6 +34,41 @@ private let reduceArgCases: [ReduceArgCase] = [
     ReduceArgCase(op: "reduce_argmin", expected: [0, 0])
 ]
 
+private func makeReduceOp(
+    op: String,
+    inputs: [String: MILArgument],
+    outputs: [CoreML_Specification_MILSpec_NamedValueType]
+) -> CoreML_Specification_MILSpec_Operation {
+    switch op {
+    case "reduce_sum":
+        return MILOps.reduce_sum(inputs: inputs, outputs: outputs)
+    case "reduce_mean":
+        return MILOps.reduce_mean(inputs: inputs, outputs: outputs)
+    case "reduce_max":
+        return MILOps.reduce_max(inputs: inputs, outputs: outputs)
+    case "reduce_min":
+        return MILOps.reduce_min(inputs: inputs, outputs: outputs)
+    case "reduce_prod":
+        return MILOps.reduce_prod(inputs: inputs, outputs: outputs)
+    case "reduce_sum_square":
+        return MILOps.reduce_sum_square(inputs: inputs, outputs: outputs)
+    case "reduce_l1_norm":
+        return MILOps.reduce_l1_norm(inputs: inputs, outputs: outputs)
+    case "reduce_l2_norm":
+        return MILOps.reduce_l2_norm(inputs: inputs, outputs: outputs)
+    case "reduce_log_sum":
+        return MILOps.reduce_log_sum(inputs: inputs, outputs: outputs)
+    case "reduce_log_sum_exp":
+        return MILOps.reduce_log_sum_exp(inputs: inputs, outputs: outputs)
+    case "reduce_argmax":
+        return MILOps.reduce_argmax(inputs: inputs, outputs: outputs)
+    case "reduce_argmin":
+        return MILOps.reduce_argmin(inputs: inputs, outputs: outputs)
+    default:
+        preconditionFailure("Unsupported reduce op: \(op)")
+    }
+}
+
 @Test(arguments: reduceAxesCases)
 func testReduceAxesOps(caseItem: ReduceAxesCase) async throws {
     let inputShape = [2, 2]
@@ -45,8 +80,8 @@ func testReduceAxesOps(caseItem: ReduceAxesCase) async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let axesValue = MILValue.tensorInt32(shape: [1], values: [1])
 
-    let op = MILBuilder.operation(
-        type: caseItem.op,
+    let op = makeReduceOp(
+        op: caseItem.op,
         inputs: [
             "x": MILArgument(.name("x")),
             "axes": MILArgument(.value(axesValue)),
@@ -88,8 +123,8 @@ func testReduceArgOps(caseItem: ReduceArgCase) async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: caseItem.op,
+    let op = makeReduceOp(
+        op: caseItem.op,
         inputs: [
             "x": MILArgument(.name("x")),
             "axis": MILArgument(.value(MILValue.scalarInt32(1))),

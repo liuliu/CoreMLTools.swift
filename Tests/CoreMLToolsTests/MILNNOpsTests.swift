@@ -13,8 +13,7 @@ func testMatmul() async throws {
     let inputNamedY = MILBuilder.namedValue(name: "y", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "z", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "matmul",
+    let op = MILOps.matmul(
         inputs: [
             "x": MILArgument(.name("x")),
             "y": MILArgument(.name("y")),
@@ -60,8 +59,7 @@ func testSoftmax() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "softmax",
+    let op = MILOps.softmax(
         inputs: [
             "x": MILArgument(.name("x")),
             "axis": MILArgument(.value(MILValue.scalarInt32(0)))
@@ -106,8 +104,7 @@ func testGelu() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "gelu",
+    let op = MILOps.gelu(
         inputs: [
             "x": MILArgument(.name("x")),
             "mode": MILArgument(.value(MILValue.scalarString("EXACT")))
@@ -151,8 +148,7 @@ func testLinearActivation() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "linear_activation",
+    let op = MILOps.linear_activation(
         inputs: [
             "x": MILArgument(.name("x")),
             "alpha": MILArgument(.value(MILValue.scalarFloat(2.0))),
@@ -196,8 +192,7 @@ func testPrelu() async throws {
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
     let alphaValue = MILValue.tensorFloat(shape: [2], values: [0.1, 0.2])
 
-    let op = MILBuilder.operation(
-        type: "prelu",
+    let op = MILOps.prelu(
         inputs: [
             "x": MILArgument(.name("x")),
             "alpha": MILArgument(.value(alphaValue))
@@ -239,8 +234,7 @@ func testIdentity() async throws {
     let inputNamed = MILBuilder.namedValue(name: "x", type: inputType)
     let outputNamed = MILBuilder.namedValue(name: "y", type: outputType)
 
-    let op = MILBuilder.operation(
-        type: "identity",
+    let op = MILOps.identity(
         inputs: [
             "x": MILArgument(.name("x"))
         ],

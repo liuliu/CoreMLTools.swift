@@ -22,8 +22,7 @@ func testClassifyInt64Output() async throws {
     let labelNamed = MILBuilder.namedValue(name: "classLabel", type: labelType)
     let probsNamed = MILBuilder.namedValue(name: "classLabel_probs", type: dictType)
 
-    let op = MILBuilder.operation(
-        type: "classify",
+    let op = MILOps.classify(
         inputs: [
             "probabilities": MILArgument(.name("probs")),
             "classes": MILArgument(.value(MILValue.listInt64([0, 1])))
